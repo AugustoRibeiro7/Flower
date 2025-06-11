@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script
+        src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+        type="module"
+    ></script>
+    <title>Flower</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/833/833472.png" type="image/png">
+
+
+</head>
+  <h1>Feliz Dia dos Namorados 💖</h1>
+  <dotlottie-player
+      src="https://lottie.host/4e47c019-5a43-421f-b81f-bf234bfa60f1/jd2BOsT4J8.lottie"
+      background="transparent"
+      speed="1"
+      style="width: 300px; height: 300px"
+      loop
+      autoplay
+  ></dotlottie-player>
+  <div class="msg">
+    Essa flor não se compara à sua beleza nega, mas é um pedacinho do que meu coração quis te entregar hoje 🌹💞
+  </div>
+
+  <!-- Botão do bilhete -->
+  <button id="botaoBilhete">Clique aqui para ler algo especial ✨</button>
+
+  <!-- Bilhete escondido com foto embutida -->
+  <div id="bilhete">
+    <p>
+      Você é o meu presente favorito todos os dias. Obrigado por ser essa garota e mulher incrivel, por estar ao meu lado durante tanto tempo, mesmo com todos os defeitos. Te amo! 💌
+    </p>
+    <img src="./assets/foto.jpeg" alt="Nossa foto juntos ❤️" style="margin-top: 15px; width: 100%; max-width: 250px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);" />
+    <button id="botaoBilheteFechar">Fechar💫</button>
+  </div>
+
+  <!-- Música de fundo -->
+  <audio id="musica" loop>
+    <source src="./assets/papoulas.mp3" type="audio/mp3">
+    Seu navegador não suporta áudio HTML5.
+  </audio>
+ 
+
+  <script>
+    const botao = document.getElementById("botaoBilhete");
+    const bilhete = document.getElementById("bilhete");
+    const botaoFechar = document.getElementById("botaoBilheteFechar");
+    const audio = document.getElementById('musica');
+    const loopStart = 33; // início do loop em segundos
+    const loopEnd = 197;   // fim do loop em segundos
+
+    botao.addEventListener("click", () => {
+      bilhete.style.display = "block";
+      botao.style.display = "none";
+      //audio.currentTime = loopStart;
+      fadeIn(audio, 800); // fade in em 1,5s
+    });
+
+
+    botaoFechar.addEventListener("click", () => {
+      bilhete.style.display = "none";
+      botao.style.display = "block";
+      fadeOut(audio, 800); // fade out em 1,5s
+    });
+
+    // Define o ponto inicial na primeira carga ou se estiver fora do loop
+    audio.addEventListener('loadedmetadata', () => {
+      if(audio.currentTime < loopStart || audio.currentTime > loopEnd){
+        audio.currentTime = loopStart;
+      }
+    });
+
+    // Monitorar o tempo atual para criar o loop
+    audio.addEventListener('timeupdate', () => {
+      if(audio.currentTime >= loopEnd) {
+        audio.currentTime = loopStart;
+      }
+    });
+
+    function fadeOut(audio, duration = 1000) { // duração em ms
+      const stepTime = 100; // tempo entre cada passo em ms
+      const steps = duration / stepTime;
+      let volume = audio.volume;
+      let step = volume / steps;
+
+      const fadeAudio = setInterval(() => {
+        volume -= step;
+        if (volume <= 0) {
+          volume = 0;
+          audio.volume = 0;
+          audio.pause();
+          clearInterval(fadeAudio);
+        } else {
+          audio.volume = volume;
+        }
+      }, stepTime);
+    }
+
+      function fadeIn(audio, duration = 1000) {
+    const stepTime = 50;
+    const steps = duration / stepTime;
+    let volume = 0;
+    let step = 1 / steps;
+
+    audio.volume = 0;
+    audio.play();
+
+    const fadeAudio = setInterval(() => {
+      volume += step;
+      if (volume >= 1) {
+        volume = 1;
+        audio.volume = 1;
+        clearInterval(fadeAudio);
+      } else {
+        audio.volume = volume;
+      }
+    }, stepTime);
+  }
+
+
+  </script>
+</body>
+</html>
