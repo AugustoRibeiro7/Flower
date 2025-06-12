@@ -21,7 +21,7 @@ h1{
 
 .msg{
     margin-top: 20px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: #660033;
     text-align: center;
     max-width: 300px;
@@ -37,6 +37,7 @@ h1{
     max-width: 300px;
     text-align: center;
     color: #4d0033;
+    font-size: 1.2rem;
 }
 
 #botaoBilhete, #botaoBilheteFechar {
